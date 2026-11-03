@@ -3,11 +3,20 @@ import json
 import os
 import subprocess
 from config import api_id,api_hash
+import sys
+from pathlib import Path
 
 
-client = TelegramClient('session_name', api_id, api_hash)
 
-LOG_FILE = 'downloaded_log.json'
+
+if getattr(sys, 'frozen', False):
+    APP_DIR = Path(sys.executable).resolve().parent
+else:
+    APP_DIR = Path(__file__).resolve().parent
+
+client = TelegramClient(str(APP_DIR / 'session_name'), api_id, api_hash)
+
+LOG_FILE = str(APP_DIR / 'downloaded_log.json')
 
 
 def load_log():

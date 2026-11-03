@@ -38,9 +38,16 @@ def run_async(coro, on_done=None):
 # ---------- Async logic ----------
 
 async def _fetch_groups():
-    async with client:
-        dialogs = await client.get_dialogs()
-        return [d for d in dialogs if d.is_group]
+    await client.connect()
+
+    if not await client.is_user_authorized():
+        raise RuntimeError(
+            "Telegram session is not authorized. "
+            "Please run test_login.py first."
+        )
+
+    dialogs = await client.get_dialogs()
+    return [d for d in dialogs if d.is_group]
 
 
 async def _load_topics(entity):
