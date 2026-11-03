@@ -6,4 +6,10 @@ session_name.session*
 downloaded_log.json
 config.py
 *.spec
-session_name.session-journal
+session_name.session-
+# Telegram authentication
+*.session
+telegram_login_qr.png
+
+# Local testing
+test_login.py
